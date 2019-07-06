@@ -22,6 +22,16 @@ if [ -f "./image-new.img" ]; then
 	rm ./image-new.img
 fi
 
+num=0
+for ext in img; do 
+  files=( *."$ext" )
+  num=$((num + ${#files[@]}))
+done
+
+if (( num > 1 )); then
+    exitErr "Found multiple .img files"
+fi
+
 img=$(find -maxdepth 1 -name "*.img")
 
 if [ -z "$img" ]; then
