@@ -3,7 +3,6 @@
 zImage=./arch/arm/boot/zImage
 zImageDtb=$zImage-dtb
 path=~/Escritorio/Image_Kitchen_Custom
-img=$(find -maxdepth 1 -name "*.img")
 
 exitErr()
 {
@@ -15,13 +14,15 @@ exitErr()
 
 printInfo()
 {
-	printf '\033[0;36m%s ' $1;
+	printf '\033[1;36m%s ' $1;
 	printf '\033[0m\n';
 }
 
 if [ -f "./image-new.img" ]; then
 	rm ./image-new.img
 fi
+
+img=$(find -maxdepth 1 -name "*.img")
 
 if [ -z "$img" ]; then
 	exitErr ".img file not found"
@@ -37,11 +38,13 @@ if [ -z "$path/unpackimg.sh $img" ]; then
 	exitErr "unpackimg script not found"
 fi
 
-$path/unpackimg.sh $img
+$path/unpackimg.sh $img || exitErr "Error while executing unpackimg.sh"
 
 if [ ! -d "$path/split_img" ]; then
 	exitErr "split_img folder not found after unpack attempt"
 fi
+
+printf '\n';
 
 if [ -f "$path/split_img/$name-zImage" ]; then
 	printInfo "Deleting split_img/$name-zImage"
@@ -51,11 +54,10 @@ else
 fi
 
 if [ ! -f "$zImage" ]; then
-	exitErr "Cant find $zImage"
+	exitErr "Can't find $zImage"
 fi
 
 if [ -f "$zImageDtb" ]; then
-	printInfo "Found $zImageDtb"
 	printInfo "Copying zImage-dtb..."
 	cp $zImageDtb $path/split_img/$name-zImage-dtb
 fi
@@ -68,7 +70,7 @@ if [ -z "$path/repackimg.sh" ]; then
 fi
 
 printInfo "Repacking..."
-$path/repackimg.sh
+$path/repackimg.sh || exitErr "Error while executing repackimg.sh"
 
 if [ -z "$path/image-new.img" ]; then
 	exitErr "Something went wrong ($path/image-new.img not found)"
@@ -85,7 +87,7 @@ printf '\033[0;32m\nFinished customRepack\n\n'
 printf '\033[0m';
 
 if fastboot devices | grep -q 'fastboot'; then
-	printf '\033[1;32m\nDevice in fastboot mode detected\n\n'
+	printf '\033[1;32m\nDetected device in fastboot mode\n\n'
 	printf '\033[0m';
 	printInfo "Flashing kernel..."
 	fastboot flash boot ./image-new.img
