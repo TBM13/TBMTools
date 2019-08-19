@@ -1,5 +1,7 @@
 #!/bin/bash
 
+param=$1
+
 showError()
 {
 	printf '\033[0;31m\nbuild.sh: Detected errors in a subfunction. Aborting...\n'
@@ -39,5 +41,10 @@ printf '\033[0m';
 printf '\033[0;32m\nDefconfig built successfully\n\n'
 printf '\033[0m';
 
-printInfo "Starting build..."
-mka bacon | tee build.log
+if [ -z "$param" ]; then
+	printInfo "Starting build..."
+	mka bacon | tee build.log
+else
+	printInfo "Starting custom build..."
+	mka $param | tee build.log
+fi
