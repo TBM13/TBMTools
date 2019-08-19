@@ -3,6 +3,7 @@
 zImage=./arch/arm/boot/zImage
 zImageDtb=$zImage-dtb
 path=~/Escritorio/Image_Kitchen_Custom
+param=$1
 
 exitErr()
 {
@@ -95,6 +96,10 @@ fi
 
 printf '\033[0;32m\nFinished customRepack\n\n'
 printf '\033[0m';
+
+if [ -z "$param" ]; then
+	exit 0
+fi
 
 if fastboot devices | grep -q 'fastboot'; then
 	printf '\033[1;32m\nDetected device in fastboot mode\n\n'

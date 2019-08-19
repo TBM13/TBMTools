@@ -21,5 +21,5 @@ printf '\033[0;32m\nzImage built successfully\n'
 printf '\033[0m';
 
 if [ -f "./customRepack.sh" ]; then
-	./customRepack.sh
+	./customRepack.sh 1
 fi
