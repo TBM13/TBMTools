@@ -107,4 +107,12 @@ if fastboot devices | grep -q 'fastboot'; then
 	printInfo "Flashing kernel..."
 	fastboot flash boot ./image-new.img
 	fastboot reboot
+	exit 0
+fi
+
+if adb devices | grep -q 'recovery'; then
+	printf '\033[1;32m\nDetected device in recovery mode\n\n'
+	printf '\033[0m';
+	printInfo "Pushing kernel to /sdcard..."
+	adb push ./image-new.img /sdcard
 fi
