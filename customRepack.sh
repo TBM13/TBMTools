@@ -1,9 +1,10 @@
 #!/bin/bash
 
-zImage=./arch/arm/boot/zImage
+arch="${1:-$ARCH}"
+arch="${arch:-arm}"
+zImage=./arch/$arch/boot/zImage
 zImageDtb=$zImage-dtb
 path=~/Escritorio/Image_Kitchen_Custom
-param=$1
 
 exitErr()
 {
@@ -94,23 +95,18 @@ if [ -z "./image-new.img" ]; then
 	exitErr "Something went wrong (./image-new.img not found)"
 fi
 
-printf '\033[0;32m\nFinished customRepack\n\n'
-printf '\033[0m';
+printf '\033[0;32m\nFinished customRepack\n\n\033[0m'
 
-if [ -z "$param" ]; then
-	if fastboot devices | grep -q 'fastboot'; then
-		printf '\033[1;32m\nDetected device in fastboot mode\n\n'
-		printf '\033[0m';
-		printInfo "Flashing kernel..."
-		fastboot flash boot ./image-new.img
-		fastboot reboot
-		exit 0
-	fi
+if fastboot devices | grep -q 'fastboot'; then
+	printf '\033[1;32m\nDetected device in fastboot mode\n\n\033[0m'
+	printInfo "Flashing kernel..."
+	fastboot flash boot ./image-new.img
+	fastboot reboot
+	exit 0
+fi
 
-	if adb devices | grep -q 'recovery'; then
-		printf '\033[1;32m\nDetected device in recovery mode\n\n'
-		printf '\033[0m';
-		printInfo "Pushing kernel to /sdcard..."
-		adb push ./image-new.img /sdcard
-	fi
+if adb devices | grep -q 'recovery'; then
+	printf '\033[1;32m\nDetected device in recovery mode\n\n\033[0m'
+	printInfo "Pushing kernel to /sdcard..."
+	adb push ./image-new.img /sdcard
 fi
