@@ -1,11 +1,10 @@
 #!/bin/bash
 
-param=$1
+param="${1:-bacon}"
 
 showError()
 {
-	printf '\033[0;31m\nbuild.sh: Detected errors in a subfunction. Aborting...\n'
-	printf '\033[0m';
+	printf '\033[0;31m\nbuild.sh: Detected errors in a subfunction. Aborting...\n\033[0m'
 	exit 1
 }
 
@@ -29,23 +28,11 @@ export ANDROID_JACK_VM_ARGS="-Xmx4096m -Xms512m -Dfile.encoding=UTF-8 -XX:+Tiere
 
 printInfo "Running environment setup..."
 . build/envsetup.sh || showError
-
-printf '\033[0;32m\nFinished environment setup successfully\n\n'
-printf '\033[0m';
+printf '\033[0;32m\nFinished environment setup successfully\n\n\033[0m'
 
 printInfo "Lunching device..."
 lunch lineage_j2lte-userdebug || showError
+printf '\033[0;32m\nFinished lunch successfully\n\n\033[0m'
 
-printf '\033[0;32m\nFinished lunch successfully\n\n'
-printf '\033[0m';
-
-printf '\033[0;32m\nDefconfig built successfully\n\n'
-printf '\033[0m';
-
-if [ -z "$param" ]; then
-	printInfo "Starting build..."
-	mka bacon | tee build.log
-else
-	printInfo "Starting custom build..."
-	mka $param | tee build.log
-fi
+printInfo "Starting $param build..."
+mka $param | tee build.log
