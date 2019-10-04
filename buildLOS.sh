@@ -1,6 +1,7 @@
 #!/bin/bash
 
-param="${1:-bacon}"
+device=$1
+mkaArgument="${2:-bacon}"
 
 showError()
 {
@@ -13,6 +14,11 @@ printInfo()
 	printf '\033[1;36m%s ' $1;
 	printf '\033[0m\n';
 }
+
+if [ -z "$1" ]; then
+    printInfo "Usage: buildLOS <device> [mka argument]"
+    exit 0
+fi
 
 printInfo "Configuring some things..."
 export LC_ALL=C
@@ -30,8 +36,8 @@ printInfo "Running environment setup..."
 printf '\033[0;32m\nFinished environment setup successfully\n\n\033[0m'
 
 printInfo "Lunching device..."
-lunch lineage_j2lte-userdebug || showError
+lunch lineage_$device-userdebug || showError
 printf '\033[0;32m\nFinished lunch successfully\n\n\033[0m'
 
 printInfo "Starting $param build..."
-mka $param | tee build.log
+mka $mkaArgument | tee build.log
