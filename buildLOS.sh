@@ -20,7 +20,8 @@ export CCACHE_DIR=./.ccache
 export USE_CCACHE=1
 export CCACHE_COMPRESS=1
 prebuilts/misc/linux-x86/ccache/ccache -M 50G
-export CCACHE_DIR=/dev/sdb6/.ccache
+sudo chown -R tbm /media/tbm/9099c6bb-87c2-4b4a-ba09-c4d46d641de8/*
+export CCACHE_DIR=/media/tbm/9099c6bb-87c2-4b4a-ba09-c4d46d641de8/.ccache
 
 export ANDROID_JACK_VM_ARGS="-Xmx4096m -Xms512m -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
 ./prebuilts/sdk/tools/jack-admin kill-server
