@@ -28,7 +28,7 @@ export CCACHE_COMPRESS=1
 prebuilts/misc/linux-x86/ccache/ccache -M 50G
 sudo mkdir /ccache-partition
 sudo mount /dev/sdb6 /ccache-partition
-sudo chown -R tbm /ccache-partition/*
+sudo chown -R $USER /ccache-partition/*
 export CCACHE_DIR=/ccache-partition/.ccache
 
 export ANDROID_JACK_VM_ARGS="-Xmx4096m -Xms512m -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
