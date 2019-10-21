@@ -43,5 +43,11 @@ printInfo "Lunching device..."
 lunch lineage_$device-userdebug || showError
 printf '\033[0;32m\nFinished lunch successfully\n\n\033[0m'
 
-printInfo "Starting $param build..."
+if [ "$mkaArgument" == "twrp" ]; then
+	export RECOVERY_VARIANT=twrp
+	mkaArgument=recoveryimage
+fi
+
+printInfo "Starting $mkaArgument build..."
+
 mka $mkaArgument | tee build.log
