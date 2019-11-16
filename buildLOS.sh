@@ -25,7 +25,7 @@ export LC_ALL=C
 export CCACHE_DIR=./.ccache
 export USE_CCACHE=1
 export CCACHE_COMPRESS=1
-prebuilts/misc/linux-x86/ccache/ccache -M 50G
+prebuilts/misc/linux-x86/ccache/ccache -M 20G
 sudo mkdir /ccache-partition
 sudo mount /dev/sdb6 /ccache-partition
 sudo chown -R $USER /ccache-partition/*
