@@ -24,10 +24,10 @@ printInfo "Configuring some things..."
 export LC_ALL=C
 export CCACHE_DIR=./.ccache
 export USE_CCACHE=1
-export CCACHE_COMPRESS=1
 prebuilts/misc/linux-x86/ccache/ccache -M 70G
 
-export ANDROID_JACK_VM_ARGS="-Xmx4096m -Xms512m -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
+export ANDROID_JACK_VM_ARGS="-Xmx4096m -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
+export JACK_SERVER_VM_ARGUMENTS=$ANDROID_JACK_VM_ARGS
 ./prebuilts/sdk/tools/jack-admin kill-server
 ./prebuilts/sdk/tools/jack-admin start-server
 
