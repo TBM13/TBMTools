@@ -29,7 +29,8 @@ sudo mount /dev/sdb6 /ccache-partition
 sudo chown -R $USER /ccache-partition/*
 export CCACHE_DIR=/ccache-partition/.ccache
 
-export ANDROID_JACK_VM_ARGS="-Xmx4096m -Xms512m -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
+export ANDROID_JACK_VM_ARGS="-Xmx4096m -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
+export JACK_SERVER_VM_ARGUMENTS=$ANDROID_JACK_VM_ARGS
 ./prebuilts/sdk/tools/jack-admin kill-server
 ./prebuilts/sdk/tools/jack-admin start-server
 
