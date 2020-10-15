@@ -21,13 +21,13 @@ if [ -z "$1" ]; then
 fi
 
 printInfo "Configuring some things..."
-export LC_ALL=C
-export USE_CCACHE=1
-prebuilts/misc/linux-x86/ccache/ccache -M 42G
 sudo mkdir /ccache-partition
 sudo mount /dev/sdb6 /ccache-partition
 sudo chown -R $USER /ccache-partition/*
 export CCACHE_DIR=/ccache-partition/.ccache
+export LC_ALL=C
+export USE_CCACHE=1
+#prebuilts/misc/linux-x86/ccache/ccache -M 42G
 
 export ANDROID_JACK_VM_ARGS="-Xmx5G -Dfile.encoding=UTF-8 -XX:+TieredCompilation"
 export JACK_SERVER_VM_ARGUMENTS=$ANDROID_JACK_VM_ARGS
