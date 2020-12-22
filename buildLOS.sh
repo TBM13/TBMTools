@@ -45,6 +45,14 @@ printf '\033[0;32m\nFinished lunch successfully\n\n\033[0m'
 if [ "$mkaArgument" == "twrp" ]; then
 	export RECOVERY_VARIANT=twrp
 	mkaArgument=recoveryimage
+elif [ "$mkaArgument" == "mmm" ]; then
+	if [ -z "$1" ]; then
+    		printInfo "Usage: buildLOS $1 mmm <directories>"
+    		exit 0
+	fi
+	mmm $3 | tee build.log
+	printInfo "Starting $3 build..."
+	exit 0
 fi
 
 printInfo "Starting $mkaArgument build..."
