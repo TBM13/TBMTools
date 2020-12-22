@@ -46,7 +46,7 @@ if [ "$mkaArgument" == "twrp" ]; then
 	export RECOVERY_VARIANT=twrp
 	mkaArgument=recoveryimage
 elif [ "$mkaArgument" == "mmm" ]; then
-	if [ -z "$1" ]; then
+	if [ -z "$3" ]; then
     		printInfo "Usage: buildLOS $1 mmm <directories>"
     		exit 0
 	fi
