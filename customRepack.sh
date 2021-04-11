@@ -4,7 +4,7 @@ arch="${1:-$ARCH}"
 arch="${arch:-arm}"
 zImage=./arch/$arch/boot/zImage
 zImageDtb=$zImage-dtb
-path=~/Escritorio/Image_Kitchen_Custom
+path=~/Desktop/Common/CustomRepack
 
 exitErr()
 {
@@ -66,8 +66,14 @@ else
 fi
 
 if [ ! -f "$zImage" ]; then
-	exitErr "Can't find $zImage"
+	if [ ! -f "./arch/$arch/boot/Image" ]; then
+		exitErr "Can't find $zImage"
+	fi
+	
+	zImage=./arch/$arch/boot/Image
 fi
+
+	printInfo "Kernel Image: $zImage"
 
 if [ -f "$zImageDtb" ]; then
 	printInfo "Copying zImage-dtb..."
