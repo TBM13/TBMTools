@@ -1,4 +1,5 @@
 #!/bin/bash
+start=`date +%s`
 
 showError()
 {
@@ -18,8 +19,10 @@ export ARCH=arm
 make lineage_fame_defconfig || showError
 printf '\033[0;32m\nDefconfig built successfully\n\n\033[0m'
 
-make ARCH=$ARCH -j4 || showError
-printf '\033[0;32m\nKernel Image built successfully\n\033[0m'
+GCC="gcc"
+make ARCH=$ARCH -j4 CC="ccache $CROSS_COMPILE$GCC" || showError
+end=`date +%s`
+printf "\033[0;32m\nKernel Image built successfully. Total Time: $((end-start)) seconds\n\033[0m"
 
 if [ -f "./customRepack.sh" ]; then
 	./customRepack.sh $ARCH
